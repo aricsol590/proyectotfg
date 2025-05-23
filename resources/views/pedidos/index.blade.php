@@ -29,9 +29,9 @@
             <th>Repartidor</th>
             <th>Dirección</th>
             <th>Teléfono</th>
-            <th>Estado</th> {{-- NUEVA COLUMNA --}}
+            <th>Estado</th>
             <th>Nº Productos</th>
-            {{-- <th>Fecha Creación</th> <-- ELIMINA O COMENTA ESTA LÍNEA --}}
+            <th>Fecha Pedido</th> {{-- COLUMNA AGREGADA --}}
             <th>Acciones</th>
         </tr>
     </thead>
@@ -42,9 +42,9 @@
                 <td>{{ $pedido->repartidor->nombre ?? 'No asignado' }}</td>
                 <td>{{ $pedido->direccion ?? '-' }}</td>
                 <td>{{ $pedido->telefono ?? '-' }}</td>
-                <td>{{ ucfirst($pedido->estado) }}</td> {{-- NUEVA COLUMNA --}}
+                <td>{{ ucfirst($pedido->estado) }}</td>
                 <td>{{ $pedido->productos_count }}</td>
-                {{-- <td>{{ $pedido->created_at->format('d/m/Y H:i') }}</td> <-- ELIMINA O COMENTA ESTA LÍNEA --}}
+                <td>{{ $pedido->created_at->format('d/m/Y H:i') }}</td> {{-- VALOR AGREGADO --}}
                 <td>
                     <a href="{{ route('pedidos.show', $pedido) }}" class="btn btn-sm btn-info">Ver</a>
                     <a href="{{ route('pedidos.edit', $pedido) }}" class="btn btn-sm btn-warning">Editar</a>
@@ -57,8 +57,7 @@
             </tr>
         @empty
             <tr>
-                {{-- Ajusta el colspan si eliminaste la columna de fecha --}}
-                <td colspan="7" class="text-center">No hay pedidos registrados.</td>
+                <td colspan="8" class="text-center">No hay pedidos registrados.</td>
             </tr>
         @endforelse
     </tbody>
@@ -68,5 +67,4 @@
 <div class="d-flex justify-content-center">
     {{ $pedidos->links() }}
 </div>
-
 @endsection

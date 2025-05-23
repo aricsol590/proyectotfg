@@ -9,10 +9,8 @@ class PedidoProducto extends Model
 {
     use HasFactory;
 
-    // No se debe definir la clave primaria ya que es una tabla intermedia
     protected $table = 'pedido_producto';
 
-    // Definir los campos que puedes llenar de manera masiva
     protected $fillable = ['id_pedido', 'id_producto', 'cantidad', 'precio_unitario'];
 
     // Relación con Pedido
