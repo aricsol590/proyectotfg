@@ -13,7 +13,17 @@ return new class extends Migration
     {
         Schema::create('pedidos', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('id_repartidor')->nullable();
+            $table->string('direccion')->nullable();
+            $table->string('telefono')->nullable();
+            $table->string('estado')->default('en proceso');
             $table->timestamps();
+
+            $table->foreign('id_repartidor')
+                  ->references('id')
+                  ->on('repartidores')
+                  ->onDelete('restrict')
+                  ->onUpdate('cascade');
         });
     }
 

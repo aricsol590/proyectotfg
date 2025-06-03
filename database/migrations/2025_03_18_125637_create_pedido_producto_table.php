@@ -12,7 +12,27 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('pedido_producto', function (Blueprint $table) {
-            $table->id();
+            $table->unsignedBigInteger('id_pedido');
+            $table->unsignedBigInteger('id_producto');
+
+            // Marcamos la clave primaria compuesta
+            $table->primary(['id_pedido', 'id_producto']);
+
+            // Añadimos los constraints como FK
+            $table->foreign('id_pedido')
+                  ->references('id')
+                  ->on('pedidos')
+                  ->onUpdate('cascade')
+                  ->onDelete('cascade');
+
+            $table->foreign('id_producto')
+                  ->references('id')
+                  ->on('productos')
+                  ->onUpdate('cascade')
+                  ->onDelete('cascade');
+
+            // El resto de columnas
+            $table->integer('cantidad');
             $table->timestamps();
         });
     }

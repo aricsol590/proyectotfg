@@ -1,31 +1,86 @@
-<!-- resourceviewproductoedit.blade.php -->
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Producto</title>
-</head>
-<body>
-    <h1>Editar Producto</h1>
+<!-- resources/views/productos/edit.blade.php -->
+@extends('layouts.app')
 
-    <form action="{{ route('productos.update', $producto) }}" method="POST">
-        @csrf
-        @method('PUT')
+@section('title', 'Editar Producto')
 
-        <label for="nombre">Nombre:</label>
-        <input type="text" name="nombre" id="nombre" value="{{ $producto->nombre }}" required><br>
+@section('content')
+<div class="container mt-4">
+    <div class="row mb-3">
+        <div class="col">
+            <h1>Editar Producto</h1>
+        </div>
+        <div class="col-auto">
+            <a href="{{ route('productos.index') }}" class="btn btn-outline-primary">
+                ← Volver a la lista
+            </a>
+        </div>
+    </div>
 
-        <label for="precio">Precio:</label>
-        <input type="number" name="precio" id="precio" value="{{ $producto->precio }}" required><br>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form action="{{ route('productos.update', $producto) }}" method="POST" class="needs-validation" novalidate>
+                @csrf
+                @method('PUT')
 
-        <label for="tipo">Tipo:</label>
-        <input type="text" name="tipo" id="tipo" value="{{ $producto->tipo }}" required><br>
+                <div class="form-group mb-3">
+                    <label for="nombre" class="form-label">Nombre</label>
+                    <input
+                        type="text"
+                        class="form-control @error('nombre') is-invalid @enderror"
+                        name="nombre"
+                        id="nombre"
+                        value="{{ old('nombre', $producto->nombre) }}"
+                        required
+                    >
+                    @error('nombre')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @else
+                        <div class="form-text">Máximo 255 caracteres.</div>
+                    @enderror
+                </div>
 
-        <button type="submit">Actualizar Producto</button>
-    </form>
+                <div class="form-group mb-3">
+                    <label for="precio" class="form-label">Precio</label>
+                    <input
+                        type="number"
+                        step="0.01"
+                        class="form-control @error('precio') is-invalid @enderror"
+                        name="precio"
+                        id="precio"
+                        value="{{ old('precio', $producto->precio) }}"
+                        required
+                    >
+                    @error('precio')
+                        <div class="invalid-feedback d-block">{{ $message }}</div>
+                        @else
+                        <div class="form-text">Ejemplo: 9.99</div>
+                    @enderror
+                </div>
 
-    <br>
-    <a href="{{ route('productos.index') }}">Volver a la lista de productos</a>
-</body>
-</html>
+                <div class="form-group mb-4">
+                    <label for="tipo" class="form-label">Tipo</label>
+                    <input
+                        type="text"
+                        class="form-control @error('tipo') is-invalid @enderror"
+                        name="tipo"
+                        id="tipo"
+                        value="{{ old('tipo', $producto->tipo) }}"
+                        required
+                    >
+                    @error('tipo')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @else
+                        <div class="form-text">Categoría o familia del producto.</div>
+                    @enderror
+                </div>
+
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary">
+                        Guardar Cambios
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@endsection

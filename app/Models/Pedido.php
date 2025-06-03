@@ -9,12 +9,6 @@ class Pedido extends Model
 {
     use HasFactory;
 
-    // Elimina o comenta esta línea si la tenías:
-    // public $timestamps = false;
-
-    // Si no necesitas asignar manualmente created_at/updated_at, no hace falta
-    // definir $fillable para ellos; Laravel los gestionará automáticamente.
-
     protected $fillable = [
         'id_repartidor',
         'direccion',
@@ -22,7 +16,6 @@ class Pedido extends Model
         'estado',
     ];
 
-    // Asegúrate de que Laravel los castee a Carbon:
     protected $casts = [
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
