@@ -4,10 +4,26 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\PedidosController;
+use App\Http\Controllers\RepartidorController;
 
+Route::resource('repartidores', RepartidorController::class)
+     ->parameters(['repartidores' => 'repartidor']);
 // Eliminamos el name de "/" para que no choque con "/pedidos"
 Route::get('/', [PedidosController::class, 'index']);
 
+
+// Cocina: ver pedidos en proceso
+Route::get('cocina', [PedidosController::class, 'cocina'])
+     ->name('pedidos.cocina');
+
+// Avanzar estado: En Proceso → En el horno → En envío
+Route::post('cocina/{pedido}/avanzar', [PedidosController::class, 'avanzarEstado'])
+     ->name('pedidos.avanzarEstado');
+     
+ // Mostrar solo pedidos “En el horno”
+Route::get('pedidos/horno', [PedidosController::class, 'horno'])
+     ->name('pedidos.horno');
+    
 // Totales por repartidor
 Route::get('pedidos/cuenta-repartidor', [PedidosController::class, 'CuentaRepartidor'])
      ->name('pedidos.cuentaRepartidor');

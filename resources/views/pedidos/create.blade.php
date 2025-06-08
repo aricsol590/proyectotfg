@@ -1,3 +1,4 @@
+{{-- resources/views/pedidos/create.blade.php --}}
 @extends('layouts.app')
 
 @section('title', 'Crear Pedido')
@@ -33,7 +34,7 @@
                 <div class="mb-3">
                     <h5>Tipos de producto</h5>
                     <div class="d-flex flex-wrap gap-2" id="tipo-buttons">
-                        @foreach ($productos->pluck('tipo')->unique() as $tipo)
+                        @foreach ($tipos as $tipo)
                             <button
                                 type="button"
                                 class="btn btn-outline-primary btn-sm tipo-btn"
@@ -82,22 +83,6 @@
                             >
                             <label for="direccion">Dirección</label>
                             @error('direccion')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-floating">
-                            <input
-                                type="text"
-                                name="telefono"
-                                id="telefono"
-                                class="form-control @error('telefono') is-invalid @enderror"
-                                placeholder="Teléfono"
-                                value="{{ old('telefono') }}"
-                            >
-                            <label for="telefono">Teléfono</label>
-                            @error('telefono')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
@@ -248,7 +233,6 @@ document.addEventListener('DOMContentLoaded', function () {
             row.remove();
             recalc();
         });
-        // Set initial subtotal on add
         recalcRow(row);
     }
 

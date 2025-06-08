@@ -1,15 +1,20 @@
-{{-- resources/views/pedidos/index.blade.php --}}
+{{-- resources/views/pedidos/horno.blade.php --}}
 @extends('layouts.app')
 
-@section('title', 'Lista de Pedidos')
+@section('title', 'Pedidos en Horno')
 
 @section('content')
 <div class="container mt-3">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="h3">Lista de Pedidos</h1>
-        <a href="{{ route('pedidos.create') }}" class="btn btn-outline-primary btn-sm">
-            + Nuevo Pedido
-        </a>
+        <h1 class="h3">Pedidos “En el horno”</h1>
+        <div class="d-flex gap-2">
+            <a href="{{ route('pedidos.create') }}" class="btn btn-outline-primary btn-sm">
+                + Nuevo Pedido
+            </a>
+            <a href="{{ route('pedidos.index') }}" class="btn btn-outline-secondary btn-sm">
+                ← Lista General
+            </a>
+        </div>
     </div>
 
     @if (session('success'))
@@ -52,31 +57,22 @@
                                 <td>{{ $pedido->productos_count }}</td>
                                 <td>{{ $pedido->created_at->format('d/m/Y H:i') }}</td>
                                 <td>
-                                    <div class="d-flex">
-                                        <a href="{{ route('pedidos.show', $pedido) }}" class="btn btn-info btn-sm me-2">
+                                    <div class="d-flex gap-2">
+                                        <a href="{{ route('pedidos.show', $pedido) }}"
+                                           class="btn btn-info btn-sm">
                                             Ver
                                         </a>
-                                        <a href="{{ route('pedidos.edit', $pedido) }}" class="btn btn-warning btn-sm me-2">
+                                        <a href="{{ route('pedidos.edit', $pedido) }}"
+                                           class="btn btn-warning btn-sm">
                                             Editar
                                         </a>
-                                        {{-- Avanzar estado --}}
-                                        @php
-                                            $labels = [
-                                                'en proceso'  => 'Enviar al horno',
-                                                'en el horno' => 'Marcar en envío',
-                                            ];
-                                            $accion = $labels[$pedido->estado] ?? null;
-                                        @endphp
-                                        @if($accion)
-                                            <form action="{{ route('pedidos.avanzarEstado', $pedido) }}"
-                                                  method="POST"
-                                                  class="me-2">
-                                                @csrf
-                                                <button type="submit" class="btn btn-success btn-sm">
-                                                    {{ $accion }}
-                                                </button>
-                                            </form>
-                                        @endif
+                                        <form action="{{ route('pedidos.avanzarEstado', $pedido) }}"
+                                              method="POST">
+                                            @csrf
+                                            <button type="submit" class="btn btn-success btn-sm">
+                                                Marcar Envío
+                                            </button>
+                                        </form>
                                         <form action="{{ route('pedidos.destroy', $pedido) }}"
                                               method="POST"
                                               onsubmit="return confirm('¿Eliminar este pedido?')">
@@ -91,7 +87,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="8" class="text-center py-4">No hay pedidos registrados.</td>
+                                <td colspan="8" class="text-center py-4">No hay pedidos “En el horno”.</td>
                             </tr>
                         @endforelse
                     </tbody>

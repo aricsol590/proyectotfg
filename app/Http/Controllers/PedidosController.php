@@ -24,10 +24,18 @@ class PedidosController extends Controller
 
     public function create()
     {
-        $productos    = Producto::orderBy('tipo')->orderBy('nombre')->get();
+        // Traemos todos los productos
+        $productos = Producto::orderBy('tipo')
+                             ->orderBy('nombre')
+                             ->get();
+
+        // Extraemos los tipos únicos para los botones
+        $tipos = $productos->pluck('tipo')->unique();
+
+        // Repartidores para el select
         $repartidores = Repartidor::orderBy('nombre')->get();
 
-        return view('pedidos.create', compact('productos', 'repartidores'));
+        return view('pedidos.create', compact('productos', 'tipos', 'repartidores'));
     }
 
     public function store(Request $request)
@@ -75,9 +83,11 @@ class PedidosController extends Controller
     public function edit(Pedido $pedido)
     {
         $pedido->load('productos', 'repartidor');
-        $productosDisponibles = Producto::orderBy('tipo')->orderBy('nombre')->get();
-        $repartidores         = Repartidor::orderBy('nombre')->get();
-        $productosActuales    = $pedido->productos->pluck('pivot.cantidad', 'id');
+        $productosDisponibles = Producto::orderBy('tipo')
+                                        ->orderBy('nombre')
+                                        ->get();
+        $repartidores      = Repartidor::orderBy('nombre')->get();
+        $productosActuales = $pedido->productos->pluck('pivot.cantidad', 'id');
 
         return view('pedidos.edit', compact(
             'pedido',
@@ -139,6 +149,41 @@ class PedidosController extends Controller
             return redirect()->route('pedidos.index')
                              ->with('error', 'Error al eliminar el pedido.');
         }
+    }
+
+    public function cocina()
+    {
+        $pedidos = Pedido::where('estado', 'en proceso')
+                         ->orderBy('created_at')
+                         ->get();
+
+        return view('pedidos.cocina', compact('pedidos'));
+    }
+
+   
+    public function horno()
+    {
+        $pedidos = Pedido::where('estado', 'en el horno')
+                        ->orderBy('created_at')
+                        ->paginate(15);
+
+        return view('pedidos.horno', compact('pedidos'));
+    }
+
+    public function avanzarEstado(Pedido $pedido)
+    {
+        $estados = ['en proceso', 'en el horno', 'en envío'];
+        $actual  = $pedido->estado;
+        $idx     = array_search($actual, $estados);
+
+        if ($idx === false || $idx === count($estados) - 1) {
+            return back()->with('error', "No se puede avanzar el estado del pedido #{$pedido->id}.");
+        }
+
+        $pedido->estado = $estados[$idx + 1];
+        $pedido->save();
+
+        return back()->with('success', "Pedido #{$pedido->id} ahora está “{$pedido->estado}”.");
     }
 
     public function CuentaRepartidor()

@@ -29,7 +29,7 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav align-items-center">
                         <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('pedidos.*') ? 'active' : '' }}"
+                            <a class="nav-link {{ request()->routeIs('pedidos.index') ? 'active' : '' }}"
                                href="{{ route('pedidos.index') }}">
                                 Pedidos
                             </a>
@@ -38,6 +38,24 @@
                             <a class="nav-link {{ request()->routeIs('productos.*') ? 'active' : '' }}"
                                href="{{ route('productos.index') }}">
                                 Productos
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('repartidores.*') ? 'active' : '' }}"
+                               href="{{ route('repartidores.index') }}">
+                                Repartidores
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('pedidos.cocina') ? 'active' : '' }}"
+                               href="{{ route('pedidos.cocina') }}">
+                                Cocina
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('pedidos.horno') ? 'active' : '' }}"
+                               href="{{ route('pedidos.horno') }}">
+                                Horno
                             </a>
                         </li>
                         <li class="nav-item ms-3">
