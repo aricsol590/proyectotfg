@@ -8,7 +8,7 @@ use App\Http\Controllers\RepartidorController;
 
 Route::resource('repartidores', RepartidorController::class)
      ->parameters(['repartidores' => 'repartidor']);
-// Eliminamos el name de "/" para que no choque con "/pedidos"
+     
 Route::get('/', [PedidosController::class, 'index']);
 
 

@@ -9,9 +9,6 @@ class Repartidor extends Model
 {
     use HasFactory;
 
-    /**
-     * Nombre explícito de la tabla para evitar la pluralización automática incorrecta.
-     */
     protected $table = 'repartidores';
 
     protected $fillable = [

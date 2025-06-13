@@ -73,10 +73,6 @@
                     @endforeach
                 </div>
 
-                <button type="button" id="add-producto-btn" class="btn btn-outline-success btn-sm">
-                    + Añadir Producto
-                </button>
-
                 {{-- Errores relacionados --}}
                 @if ($errors->has('productos') && !$errors->has('productos.*'))
                     <div class="mt-2 text-danger">{{ $errors->first('productos') }}</div>

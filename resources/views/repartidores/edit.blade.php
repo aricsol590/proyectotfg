@@ -29,20 +29,6 @@
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
         </div>
-
-        <div class="form-floating mb-4">
-            <input type="text"
-                   name="telefono"
-                   id="telefono"
-                   class="form-control @error('telefono') is-invalid @enderror"
-                   placeholder="Teléfono"
-                   value="{{ old('telefono', $repartidor->telefono) }}">
-            <label for="telefono">Teléfono (opcional)</label>
-            @error('telefono')
-                <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
-        </div>
-
         <div class="d-flex justify-content-end gap-2">
             <a href="{{ route('repartidores.index') }}" class="btn btn-outline-secondary">Cancelar</a>
             <button type="submit" class="btn btn-primary">Actualizar</button>
